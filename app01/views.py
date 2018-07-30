@@ -5,8 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
-# 笔记列表
-def note_list(request):
+def note_list(request):  # 笔记列表
     ret = {"code": 0}
     data = list(models.Note.objects.all().values("id", "title", "content", "markedcontent"))
     ret["data"] = data
@@ -14,13 +13,8 @@ def note_list(request):
 
 
 @csrf_exempt
-def add(request):
+def add(request):  # 添加笔记
     print(request.POST)
-    print(request.body)
-    # data_str = str(request.body, encoding="utf8")
-    # import json
-    # dic = json.loads(data_str)
-    # print(dic)
     ret = {"code": 0}
     title = request.POST.get("title")
     content = request.POST.get("content")
@@ -39,7 +33,7 @@ def add(request):
     return JsonResponse(ret)
 
 
-def delete(request, delete_id):
+def delete(request, delete_id):  # 删除笔记
     print(delete_id)
     ret = {"code": 0}
     models.Note.objects.filter(id=delete_id).delete()
@@ -47,7 +41,7 @@ def delete(request, delete_id):
 
 
 @csrf_exempt
-def edit(request):
+def edit(request):  # 修改笔记
     ret = {"code": 0}
     edit_id = request.POST.get("id")
     title = request.POST.get("title")
